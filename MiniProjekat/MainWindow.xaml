@@ -30,7 +30,12 @@
         <Label Content="Data type:" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center"/>
         <ComboBox x:Name="dataType" Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" IsEditable="False" MinWidth="100px" MinHeight="30px"/>
 
-        <ToggleButton x:Name="graphType" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100px" MinWidth="30px"/>
+        <ToggleButton x:Name="graphType" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <StackPanel Margin="0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2">
+            <ToggleButton x:Name="tgl1" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="50px" MinWidth="30px"/>
+            <ToggleButton x:Name="tgl2" Content="2" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="50px" MinWidth="30px"/>
+        </StackPanel>
+
 
         <Button x:Name="showTable" Grid.Column="3" Grid.Row="3" MinWidth="100px" MinHeight="30px" HorizontalAlignment="Right" Content="Show Table"/>
 
