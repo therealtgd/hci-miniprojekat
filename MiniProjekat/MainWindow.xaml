@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow"
         Height="650"
-        Width="1200"
+        Width="1250"
         FontSize="15"
         FontFamily="Roboto Mono">
     <Grid>
@@ -19,15 +19,19 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/> <!-- Toggle button col -->
-            <ColumnDefinition Width="4*"/> <!-- Data button col -->
+            <ColumnDefinition Width="6*"/> <!-- Data button col -->
             <ColumnDefinition Width="10*"/> <!-- Graph col -->
-            <ColumnDefinition Width="4*"/> <!-- Show Table button col -->
+            <ColumnDefinition Width="5*"/> <!-- Show Table button col -->
             <!-- Show Table button col -->
         </Grid.ColumnDefinitions>
 
 
         <Label Content="Data type:" Grid.Column="1" Grid.Row="0" Margin="0 15px 0 10px"/>
-        <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" IsEditable="False" MinWidth="100px" MinHeight="30px" Margin="100px 15px 0 10px"/>
+        <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" IsEditable="False" MinWidth="100px" MinHeight="30px" Margin="100px 15px 0 10px">
+            <ComboBoxItem IsSelected="True">Consumer Price Index</ComboBoxItem>
+            <ComboBoxItem>Inflation</ComboBoxItem>
+            <ComboBoxItem>Consumer Sentiment</ComboBoxItem>
+        </ComboBox>
 
         <StackPanel Margin="0" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <ToggleButton x:Name="tgl1" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0">

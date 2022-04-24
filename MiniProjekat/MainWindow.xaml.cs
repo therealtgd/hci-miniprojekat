@@ -73,14 +73,14 @@ namespace MiniProjekat
             
         }
 
-        private async Task MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             tgl1.Checked += Tgl1_Checked;
             tgl1.Unchecked += Tgl1_Unchecked;
             tgl2.Checked += Tgl2_Checked;
             tgl2.Unchecked += Tgl2_Unchecked;
             tgl1.IsChecked = true;
-            await getData("CPI");
+            await getData("Consumer Price Index");
         }
 
         private void Tgl2_Unchecked(object sender, RoutedEventArgs e)
