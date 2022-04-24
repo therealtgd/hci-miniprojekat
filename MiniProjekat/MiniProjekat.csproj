@@ -8,7 +8,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="icons\bar_chart.png" />
+    <None Remove="icons\egg.jpg" />
+    <None Remove="icons\line_chart.png" />
+    <None Remove="icons\line_chart.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icons\bar_chart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icons\line_chart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.101" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icons\egg.jpg" />
+    <Resource Include="icons\line_chart.svg" />
   </ItemGroup>
 
 </Project>

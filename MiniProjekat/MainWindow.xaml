@@ -30,8 +30,12 @@
         <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" IsEditable="False" MinWidth="100px" MinHeight="30px" Margin="100px 15px 0 10px"/>
 
         <StackPanel Margin="0" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
-            <ToggleButton x:Name="tgl1" Content="1" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0"/>
-            <ToggleButton x:Name="tgl2" Content="2" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0"/>
+            <ToggleButton x:Name="tgl1" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0">
+                <Image Source="./icons/line_chart.png"/>
+            </ToggleButton>
+            <ToggleButton x:Name="tgl2" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0">
+                <Image Source="./icons/bar_chart.png"/>
+            </ToggleButton>
         </StackPanel>
 
         <!--Button sam stavio cisto kao placeholder za graph-->
