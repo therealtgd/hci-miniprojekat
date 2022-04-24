@@ -4,7 +4,10 @@
              xmlns:local="clr-namespace:MiniProjekat"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
-         
+        <Style TargetType="Button">
+            <Setter Property="MinWidth" Value="50" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="Margin" Value="3" />
+        </Style>
     </Application.Resources>
 </Application>
