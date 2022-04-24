@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,10 +23,60 @@ namespace MiniProjekat
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string API_KEY = "LJUP3P0MBG9X3SBZ";
+        private string selectedInterval = "monthly";
         public MainWindow()
         {
             InitializeComponent();
-            this.Loaded += MainPage_Loaded;
+            Loaded += MainPage_Loaded;
+            Loaded += windowLoaded;
+        }
+
+        private async void windowLoaded(object sender, RoutedEventArgs e)
+        {
+            await getData("CPI");
+        }
+
+        public async Task getData(string data_type)
+        {
+            string QUERY_URL = "";
+            if (data_type == "Consumer Price Index")
+                QUERY_URL = $"https://www.alphavantage.co/query?function=CPI&interval={selectedInterval}&apikey={API_KEY}";
+            else if (data_type == "Inflation")
+                QUERY_URL = $"https://www.alphavantage.co/query?function=INFLATION&apikey={API_KEY}";
+            else if (data_type == "Consumer Sentiment")
+                QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}"; 
+
+
+             HttpClient client = new HttpClient();
+            int retries = 0;
+            while (retries < 5)
+            {
+                using (HttpResponseMessage response = await client.GetAsync(QUERY_URL))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        QueryResult? queryResult;
+
+                        string json = await content.ReadAsStringAsync();
+                        queryResult = JsonConvert.DeserializeObject<QueryResult>(json);
+                        if (queryResult.name != null)
+                        {
+                            retries += 1;
+                            await Task.Delay(1000);
+                            continue;
+                        }
+                        Console.WriteLine(queryResult);
+                        return;
+                        // if linechart
+                        // forward data to linechart
+                        // else
+                        // forward data to candlechart
+                    }
+                }
+            }
+            // Show user that connection could not be established
+            
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
