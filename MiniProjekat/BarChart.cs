@@ -12,7 +12,7 @@ namespace MiniProjekat
 {
     public class BarChart
     {
-        public SeriesCollection seriesCollection;
+        public SeriesCollection seriesCollection { get; set; }
         public List<string> dates { get; set; }
 
         public BarChart()
@@ -25,6 +25,7 @@ namespace MiniProjekat
         {
             seriesCollection.Add(new ColumnSeries()
              {
+                 Title = "test",
                  Values = values,
                  Configuration = new CartesianMapper<double>()
                                     .Y(value => value)

@@ -42,6 +42,7 @@ namespace MiniProjekat
             Loaded += MainPage_Loaded;
             lineChart = new LineChart();
             barChart = new BarChart();
+            DataContext = this;
         }
 
         public async Task getData()
@@ -61,7 +62,6 @@ namespace MiniProjekat
                 QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}";
             else
                 return;
-            DataContext = this;
 
             HttpClient client = new HttpClient();
             int retries = 0;
