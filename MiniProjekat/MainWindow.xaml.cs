@@ -24,6 +24,11 @@ namespace MiniProjekat
     public partial class MainWindow : Window
     {
         private const string API_KEY = "LJUP3P0MBG9X3SBZ";
+        
+        private const string CPI = "Consumer Price Index";
+        private const string INF = "Inflation";
+        private const string CS = "Consumer Sentiment";
+
         private string selectedInterval = "monthly";
         public MainWindow()
         {
@@ -34,11 +39,11 @@ namespace MiniProjekat
         public async Task getData(string data_type)
         {
             string QUERY_URL = "";
-            if (data_type == "Consumer Price Index")
+            if (data_type == CPI)
                 QUERY_URL = $"https://www.alphavantage.co/query?function=CPI&interval={selectedInterval}&apikey={API_KEY}";
-            else if (data_type == "Inflation")
+            else if (data_type == INF)
                 QUERY_URL = $"https://www.alphavantage.co/query?function=INFLATION&apikey={API_KEY}";
-            else if (data_type == "Consumer Sentiment")
+            else if (data_type == CS)
                 QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}"; 
 
 
@@ -80,7 +85,8 @@ namespace MiniProjekat
             tgl2.Checked += Tgl2_Checked;
             tgl2.Unchecked += Tgl2_Unchecked;
             tgl1.IsChecked = true;
-            await getData("Consumer Price Index");
+            dataType.SelectionChanged += dataType_SelectionChanged;
+            await getData(CPI);
         }
 
         private void Tgl2_Unchecked(object sender, RoutedEventArgs e)
@@ -103,5 +109,16 @@ namespace MiniProjekat
             tgl2.IsChecked = false;
         }
     
+        private void dataType_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
+            string selectedDataType = typeItem.Content.ToString();
+            getData(selectedDataType);
+            if (selectedDataType == CPI)
+                interval.Visibility = Visibility.Visible;
+            else
+                interval.Visibility = Visibility.Hidden;
+        }
+
     }
 }
