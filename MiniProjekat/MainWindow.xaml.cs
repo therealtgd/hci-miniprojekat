@@ -81,10 +81,17 @@ namespace MiniProjekat
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             tgl1.Checked += Tgl1_Checked;
-            tgl1.Unchecked += Tgl1_Unchecked;
+            //tgl1.Unchecked += Tgl1_Unchecked;
             tgl2.Checked += Tgl2_Checked;
-            tgl2.Unchecked += Tgl2_Unchecked;
+            //tgl2.Unchecked += Tgl2_Unchecked;
             tgl1.IsChecked = true;
+
+            intervalTgl1.Checked += intervalTgl1_Checked;
+            //intervalTgl1.Unchecked += intervalTgl1_Unchecked;
+            intervalTgl2.Checked += intervalTgl2_Checked;
+           // intervalTgl2.Unchecked += intervalTgl2_Unchecked;
+            intervalTgl1.IsChecked = true;
+
             dataType.SelectionChanged += dataType_SelectionChanged;
             await getData(CPI);
         }
@@ -108,7 +115,27 @@ namespace MiniProjekat
         {
             tgl2.IsChecked = false;
         }
-    
+
+        private void intervalTgl1_Checked(object sender, RoutedEventArgs e)
+        {
+            intervalTgl1.IsChecked = true;
+        }
+
+        private void intervalTgl2_Checked(object sender, RoutedEventArgs e)
+        {
+            intervalTgl1.IsChecked = false;
+        }
+
+        private void intervalTgl1_Unchecked(object sender, RoutedEventArgs e)
+        {
+            intervalTgl2.IsChecked = true;
+        }
+
+        private void intervalTgl2_Unchecked(object sender, RoutedEventArgs e)
+        {
+             intervalTgl2.IsChecked = false;
+        }
+
         private void dataType_SelectionChanged(object sender, RoutedEventArgs e)
         {
             ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
