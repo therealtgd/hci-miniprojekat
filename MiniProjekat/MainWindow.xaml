@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MiniProjekat"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="US Economic Indicators"
+        Icon="./icons/logo.png"
         Height="650"
         Width="1250"
         FontSize="15"
@@ -18,16 +19,14 @@
             <RowDefinition Height="*"/> <!-- Show Table button row -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/> <!-- Toggle button col -->
-            <ColumnDefinition Width="6*"/> <!-- Data button col -->
+            <ColumnDefinition Width="0.5*"/> <!-- Toggle button col -->
             <ColumnDefinition Width="10*"/> <!-- Graph col -->
-            <ColumnDefinition Width="5*"/> <!-- Show Table button col -->
             <!-- Show Table button col -->
         </Grid.ColumnDefinitions>
 
 
         <Label Content="Data type:" Grid.Column="1" Grid.Row="0" Margin="0 15px 0 10px"/>
-        <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" IsEditable="False" MinWidth="100px" MinHeight="30px" Margin="100px 15px 0 10px">
+        <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" IsEditable="False" Width="250px" Margin="100px 15 10 10">
             <ComboBoxItem IsSelected="True">Consumer Price Index</ComboBoxItem>
             <ComboBoxItem>Inflation</ComboBoxItem>
             <ComboBoxItem>Consumer Sentiment</ComboBoxItem>
@@ -43,10 +42,15 @@
         </StackPanel>
 
         <!--Button sam stavio cisto kao placeholder za graph-->
-        <Button Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="2" Margin="0 0 15px 0"/>
+        <Button Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0"/>
 
+        <StackPanel x:Name="interval" Margin="360 0 0 0" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
+            <Label Content="Interval:" Margin="0 15px 0 10px"/>
+            <ToggleButton x:Name="intervalTgl1" Content="Monthly" Width="110px" Margin="0 15px 0 10px"/>
+            <ToggleButton x:Name="intervalTgl2" Content="Semi-annual" Width="110px" Margin="0 15px 15px 10px"/>
+        </StackPanel>
 
-        <Button x:Name="showTable" Grid.Column="4" Grid.Row="3" MinWidth="100px" MinHeight="30px" Content="Show Table" Margin="0 10px 15px 15px"/>
+        <Button x:Name="showTable" Grid.Column="1" Grid.Row="3" Content="Show Table" MinWidth="250px" HorizontalAlignment="Right" Margin="0 10 15 15"/>
 
     </Grid>
 </Window>

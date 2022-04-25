@@ -12,6 +12,11 @@
     <None Remove="icons\egg.jpg" />
     <None Remove="icons\line_chart.png" />
     <None Remove="icons\line_chart.svg" />
+    <None Remove="icons\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="icons\logo.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -102,6 +102,10 @@ namespace MiniProjekat
         {
             tgl2.IsChecked = false;
         }
-    
+
+        private void rngTgl2_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
