@@ -81,15 +81,15 @@ namespace MiniProjekat
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             tgl1.Checked += Tgl1_Checked;
-            //tgl1.Unchecked += Tgl1_Unchecked;
+            tgl1.Unchecked += Tgl1_Unchecked;
             tgl2.Checked += Tgl2_Checked;
-            //tgl2.Unchecked += Tgl2_Unchecked;
+            tgl2.Unchecked += Tgl2_Unchecked;
             tgl1.IsChecked = true;
 
             intervalTgl1.Checked += intervalTgl1_Checked;
-            //intervalTgl1.Unchecked += intervalTgl1_Unchecked;
+            intervalTgl1.Unchecked += intervalTgl1_Unchecked;
             intervalTgl2.Checked += intervalTgl2_Checked;
-           // intervalTgl2.Unchecked += intervalTgl2_Unchecked;
+            intervalTgl2.Unchecked += intervalTgl2_Unchecked;
             intervalTgl1.IsChecked = true;
 
             dataType.SelectionChanged += dataType_SelectionChanged;
@@ -98,42 +98,70 @@ namespace MiniProjekat
 
         private void Tgl2_Unchecked(object sender, RoutedEventArgs e)
         {
-            tgl1.IsChecked = true;
+            if (tgl1_handle)
+                tgl2.IsChecked = true;
         }
 
+        private bool tgl2_handle = true;
         private void Tgl2_Checked(object sender, RoutedEventArgs e)
         {
+            if (!tgl2_handle)
+                return;
+            tgl2_handle = false;
             tgl1.IsChecked = false;
+            tgl2.IsChecked = true;
+            tgl2_handle = true;
         }
 
         private void Tgl1_Unchecked(object sender, RoutedEventArgs e)
         {
-            tgl2.IsChecked = true;
+            if (tgl2_handle)
+                tgl1.IsChecked = true;
         }
 
+        private bool tgl1_handle = true;
         private void Tgl1_Checked(object sender, RoutedEventArgs e)
         {
+            if (!tgl1_handle)
+                return;
+            tgl1_handle = false;
             tgl2.IsChecked = false;
+            tgl1.IsChecked = true;
+            tgl1_handle = true;
         }
 
+        private bool intervalTgl1_handle = true;
         private void intervalTgl1_Checked(object sender, RoutedEventArgs e)
         {
+            if (!intervalTgl1_handle)
+                return;
+            intervalTgl1_handle = false;
+            intervalTgl2.IsChecked = false;
             intervalTgl1.IsChecked = true;
+            intervalTgl1_handle = true;
         }
 
+        private bool intervalTgl2_handle = true;
         private void intervalTgl2_Checked(object sender, RoutedEventArgs e)
         {
+            if (!intervalTgl2_handle)
+                return;
+            intervalTgl2_handle = false;
             intervalTgl1.IsChecked = false;
+            intervalTgl2.IsChecked = true;
+            intervalTgl2_handle = true;
         }
 
         private void intervalTgl1_Unchecked(object sender, RoutedEventArgs e)
         {
-            intervalTgl2.IsChecked = true;
+            if (intervalTgl2_handle)
+                intervalTgl1.IsChecked = true;
         }
 
         private void intervalTgl2_Unchecked(object sender, RoutedEventArgs e)
         {
-             intervalTgl2.IsChecked = false;
+            if (intervalTgl1_handle)
+                intervalTgl2.IsChecked = true;
         }
 
         private void dataType_SelectionChanged(object sender, RoutedEventArgs e)
