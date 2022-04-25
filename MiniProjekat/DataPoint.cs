@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniProjekat
 {
-    internal class DataPoint
+    public class DataPoint
     {
         public string date { get; set; }
         public string value { get; set; }

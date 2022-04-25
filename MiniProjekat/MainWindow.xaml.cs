@@ -30,11 +30,11 @@ namespace MiniProjekat
         private const string INF = "Inflation";
         private const string CS = "Consumer Sentiment";
 
-        private string selectedInterval = "monthly";
+        private string selectedInterval = "semiannual";
         private string activeView = "line";
 
-        private LineChart lineChart;
-        private BarChart barChart;
+        public LineChart lineChart { get; set; }
+        public BarChart barChart { get; set; }
 
         public MainWindow()
         {
@@ -42,7 +42,6 @@ namespace MiniProjekat
             Loaded += MainPage_Loaded;
             lineChart = new LineChart();
             barChart = new BarChart();
-            DataContext = this;
         }
 
         public async Task getData()
@@ -62,6 +61,7 @@ namespace MiniProjekat
                 QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}";
             else
                 return;
+            DataContext = this;
 
             HttpClient client = new HttpClient();
             int retries = 0;
@@ -84,7 +84,7 @@ namespace MiniProjekat
                         lineChart.fillDates(queryResult.data);
                         barChart.fillDates(queryResult.data);
                         lineChart.drawLine(values);
-                        barChart.drawLine(values);
+                        barChart.drawBars(values);
 
                         showTable.Visibility = Visibility.Visible;
                         return;
@@ -93,6 +93,8 @@ namespace MiniProjekat
             }
             // Show user that connection could not be established
             showTable.Visibility = Visibility.Hidden;
+            /*ErrorWindow errorWindow = new ErrorWindow("Error: API not available.");
+            errorWindow.ShowDialog();*/
         }
 
         public void switchView()
@@ -121,7 +123,7 @@ namespace MiniProjekat
             intervalTgl1.Unchecked += intervalTgl1_Unchecked;
             intervalTgl2.Checked += intervalTgl2_Checked;
             intervalTgl2.Unchecked += intervalTgl2_Unchecked;
-            intervalTgl1.IsChecked = true;
+            intervalTgl2.IsChecked = true;
 
             dataType.SelectionChanged += dataType_SelectionChanged;
             await getData();

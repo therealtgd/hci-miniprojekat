@@ -43,7 +43,7 @@
         </StackPanel>
 
         <!--Button sam stavio cisto kao placeholder za graph-->
-        <lvc:CartesianChart x:Name="lineChartUI" Series="{Binding lineChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+        <lvc:CartesianChart x:Name="lineChartUI" Series="{Binding Path=lineChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Value"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
@@ -52,7 +52,7 @@
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
 
-        <lvc:CartesianChart x:Name="barChartUI" Visibility="Collapsed" Series="{Binding barChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+        <lvc:CartesianChart x:Name="barChartUI" Visibility="Collapsed" Series="{Binding Path=barChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Value"></lvc:Axis>
             </lvc:CartesianChart.AxisY>

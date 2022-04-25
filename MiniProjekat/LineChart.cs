@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace MiniProjekat
 {
-    internal class LineChart
+    public class LineChart
     {
         public SeriesCollection seriesCollection { get; set; }
         public List<string> dates { get; set; }
@@ -45,7 +45,8 @@ namespace MiniProjekat
 
         public void clear()
         {
-            seriesCollection.Clear();
+            if (seriesCollection != null && seriesCollection.Chart != null)
+                seriesCollection.Clear();
             dates.Clear();
         }
 

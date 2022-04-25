@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace MiniProjekat
 {
     // Used https://json2csharp.com/ to generate class structure
-    internal class QueryResult
+    public class QueryResult
     {
         public string name { get; set; }
         public string interval { get; set; }

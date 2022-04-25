@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace MiniProjekat
 {
-    internal class BarChart
+    public class BarChart
     {
         public SeriesCollection seriesCollection;
         public List<string> dates { get; set; }
@@ -21,18 +21,16 @@ namespace MiniProjekat
             dates = new List<string>();
         }
 
-        public void drawLine(ChartValues<double> values)
+        public void drawBars(ChartValues<double> values)
         {
-            seriesCollection.Add(new LineSeries()
-            {
-                Values = values,
-                Configuration = new CartesianMapper<double>()
+            seriesCollection.Add(new ColumnSeries()
+             {
+                 Values = values,
+                 Configuration = new CartesianMapper<double>()
                                     .Y(value => value)
-                                    .Stroke(value => (value == values.Max()) ? Brushes.Red : (value == values.Min()) ? Brushes.Yellow : Brushes.Teal)
-                                    .Fill(value => (value == values.Max()) ? Brushes.Red : (value == values.Min()) ? Brushes.Yellow : Brushes.Teal),
-                PointGeometry = DefaultGeometries.Square,
-                PointGeometrySize = 10,
-            });
+                                    .Stroke(value => (value == values.Max()) ? Brushes.Red : (value == values.Min()) ? Brushes.Yellow : Brushes.BlueViolet)
+                                    .Fill(value => (value == values.Max()) ? Brushes.Red : (value == values.Min()) ? Brushes.Yellow : Brushes.LightBlue),
+             });
         }
 
         public void fillDates(List<DataPoint> datapoints)
@@ -45,7 +43,8 @@ namespace MiniProjekat
 
         public void clear()
         {
-            seriesCollection.Clear();
+            if (seriesCollection != null && seriesCollection.Chart != null)
+                seriesCollection.Clear();
             dates.Clear();
         }
     }
