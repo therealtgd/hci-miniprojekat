@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LiveCharts;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace MiniProjekat
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {   
         private const string API_KEY = "LJUP3P0MBG9X3SBZ";
         
         private const string CPI = "Consumer Price Index";
@@ -30,22 +31,37 @@ namespace MiniProjekat
         private const string CS = "Consumer Sentiment";
 
         private string selectedInterval = "monthly";
+        private string activeView = "line";
+
+        private LineChart lineChart;
+        private BarChart barChart;
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += MainPage_Loaded;
+            lineChart = new LineChart();
+            barChart = new BarChart();
+            DataContext = this;
         }
 
-        public async Task getData(string data_type)
+        public async Task getData()
         {
-            string QUERY_URL = "";
-            if (data_type == CPI)
-                QUERY_URL = $"https://www.alphavantage.co/query?function=CPI&interval={selectedInterval}&apikey={API_KEY}";
-            else if (data_type == INF)
-                QUERY_URL = $"https://www.alphavantage.co/query?function=INFLATION&apikey={API_KEY}";
-            else if (data_type == CS)
-                QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}"; 
+            lineChart.clear();
+            barChart.clear();
 
+            ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
+            string selectedDataType = typeItem.Content.ToString();
+
+            string QUERY_URL = "";
+            if (selectedDataType == CPI)
+                QUERY_URL = $"https://www.alphavantage.co/query?function=CPI&interval={selectedInterval}&apikey={API_KEY}";
+            else if (selectedDataType == INF)
+                QUERY_URL = $"https://www.alphavantage.co/query?function=INFLATION&apikey={API_KEY}";
+            else if (selectedDataType == CS)
+                QUERY_URL = $"https://www.alphavantage.co/query?function=CONSUMER_SENTIMENT&apikey={API_KEY}";
+            else
+                return;
 
             HttpClient client = new HttpClient();
             int retries = 0;
@@ -55,27 +71,42 @@ namespace MiniProjekat
                 {
                     using (HttpContent content = response.Content)
                     {
-                        QueryResult? queryResult;
-
-                        string json = await content.ReadAsStringAsync();
-                        queryResult = JsonConvert.DeserializeObject<QueryResult>(json);
-                        if (queryResult.name != null)
+                        string jsonResponse = await content.ReadAsStringAsync();
+                        QueryResult? queryResult = JsonConvert.DeserializeObject<QueryResult>(jsonResponse);
+                        if (queryResult.name == null)
                         {
                             retries += 1;
                             await Task.Delay(1000);
                             continue;
                         }
-                        Console.WriteLine(queryResult);
+
+                        ChartValues<double> values = queryResult.getValues();
+                        lineChart.fillDates(queryResult.data);
+                        barChart.fillDates(queryResult.data);
+                        lineChart.drawLine(values);
+                        barChart.drawLine(values);
+
+                        showTable.Visibility = Visibility.Visible;
                         return;
-                        // if linechart
-                        // forward data to linechart
-                        // else
-                        // forward data to candlechart
                     }
                 }
             }
             // Show user that connection could not be established
-            
+            showTable.Visibility = Visibility.Hidden;
+        }
+
+        public void switchView()
+        {
+            if (activeView == "line")
+            {
+                barChartUI.Visibility = Visibility.Collapsed;
+                lineChartUI.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lineChartUI.Visibility = Visibility.Collapsed;
+                barChartUI.Visibility = Visibility.Visible;
+            }
         }
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -93,7 +124,7 @@ namespace MiniProjekat
             intervalTgl1.IsChecked = true;
 
             dataType.SelectionChanged += dataType_SelectionChanged;
-            await getData(CPI);
+            await getData();
         }
 
         private void Tgl2_Unchecked(object sender, RoutedEventArgs e)
@@ -110,6 +141,8 @@ namespace MiniProjekat
             tgl2_handle = false;
             tgl1.IsChecked = false;
             tgl2.IsChecked = true;
+            activeView = "bar";
+            switchView();
             tgl2_handle = true;
         }
 
@@ -127,6 +160,8 @@ namespace MiniProjekat
             tgl1_handle = false;
             tgl2.IsChecked = false;
             tgl1.IsChecked = true;
+            activeView = "line";
+            switchView();
             tgl1_handle = true;
         }
 
@@ -138,6 +173,8 @@ namespace MiniProjekat
             intervalTgl1_handle = false;
             intervalTgl2.IsChecked = false;
             intervalTgl1.IsChecked = true;
+            selectedInterval = "monthly";
+            getData();
             intervalTgl1_handle = true;
         }
 
@@ -149,6 +186,8 @@ namespace MiniProjekat
             intervalTgl2_handle = false;
             intervalTgl1.IsChecked = false;
             intervalTgl2.IsChecked = true;
+            selectedInterval = "semiannual";
+            getData();
             intervalTgl2_handle = true;
         }
 
@@ -168,11 +207,11 @@ namespace MiniProjekat
         {
             ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
             string selectedDataType = typeItem.Content.ToString();
-            getData(selectedDataType);
             if (selectedDataType == CPI)
                 interval.Visibility = Visibility.Visible;
             else
-                interval.Visibility = Visibility.Hidden;
+                interval.Visibility = Visibility.Collapsed;
+            getData();
         }
 
     }

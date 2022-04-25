@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:MiniProjekat"
         mc:Ignorable="d"
         Title="US Economic Indicators"
@@ -31,7 +32,7 @@
             <ComboBoxItem>Inflation</ComboBoxItem>
             <ComboBoxItem>Consumer Sentiment</ComboBoxItem>
         </ComboBox>
-
+            
         <StackPanel Margin="0" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <ToggleButton x:Name="tgl1" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0">
                 <Image Source="./icons/line_chart.png"/>
@@ -42,7 +43,23 @@
         </StackPanel>
 
         <!--Button sam stavio cisto kao placeholder za graph-->
-        <Button Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0"/>
+        <lvc:CartesianChart x:Name="lineChartUI" Series="{Binding lineChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Value"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Date" Labels="{Binding Path=lineChart.dates}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+
+        <lvc:CartesianChart x:Name="barChartUI" Visibility="Collapsed" Series="{Binding barChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Value"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Date" Labels="{Binding Path=barChart.dates}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
 
         <StackPanel x:Name="interval" Margin="360 0 0 0" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
             <Label Content="Interval:" Margin="0 15px 0 10px"/>
