@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace MiniProjekat
 {
@@ -33,8 +34,20 @@ namespace MiniProjekat
             updateTable();
         }
 
+        public void updateTitle(string newTitle, bool newSemiannual)
+        {
+            string newTableTitle = newTitle;
+
+            if (newTitle == "Consumer Price Index")
+            {
+                newTableTitle += newSemiannual ? " - Semi-annual" : " - Monthly";
+            }
+            TitleLabel.Content = newTableTitle;
+        }
+
         private void updateTable()
         {
+            
             if (dataPoints?.Count > 0)
             {
                 if (TableXAML.Items.Count > 0)

@@ -53,8 +53,7 @@ namespace MiniProjekat
             lineChart.clear();
             barChart.clear();
 
-            ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
-            string selectedDataType = typeItem.Content.ToString();
+            string selectedDataType = getSelectedDataTypeString();
 
             string QUERY_URL = "";
             if (selectedDataType == CPI)
@@ -94,6 +93,7 @@ namespace MiniProjekat
                         if(tableWindow != null)
                         {
                             tableWindow.setDataPoints(dataPoints);
+                            tableWindow.updateTitle(getSelectedDataTypeString(), (selectedInterval == "semiannual" ? true : false));
                         }
 
                         return;
@@ -225,6 +225,18 @@ namespace MiniProjekat
             getData();
         }
 
+        private string getSelectedDataTypeString()
+        {
+            ComboBoxItem typeItem = (ComboBoxItem)dataType.SelectedItem;
+            if (typeItem.Content.ToString() is not null)
+            {
+                return typeItem.Content.ToString();
+            }
+
+            return "";
+            
+        }
+
         private void showTable_Click(object sender, RoutedEventArgs e)
         {
             if (tableWindow != null)
@@ -232,6 +244,7 @@ namespace MiniProjekat
                 tableWindow.Close();
             }
             tableWindow = new TableWindow();
+            tableWindow.updateTitle(getSelectedDataTypeString(), (selectedInterval == "semiannual" ? true : false));
             tableWindow.setDataPoints(dataPoints);
             tableWindow.Visibility = Visibility.Visible;
 

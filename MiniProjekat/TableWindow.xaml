@@ -20,7 +20,16 @@
 
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="TableXAML" HorizontalAlignment="Left" Margin="20,20,20,20" Width="auto" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" 
+        <Label x:Name="TitleLabel"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Width="auto"
+            Grid.Column="0" Grid.Row="0"
+            Margin="20,20,20,20"
+            Content="Table"
+            FontWeight="SemiBold"/>
+
+        <DataGrid x:Name="TableXAML" HorizontalAlignment="Center" Margin="20,60,20,20" Height="auto" Width="auto" Grid.Column="0" Grid.Row="1" 
                   IsReadOnly="True"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
