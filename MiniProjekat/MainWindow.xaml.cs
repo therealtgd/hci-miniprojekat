@@ -33,6 +33,9 @@ namespace MiniProjekat
         private string selectedInterval = "semiannual";
         private string activeView = "line";
 
+        private List<DataPoint> dataPoints;
+        private TableWindow tableWindow;
+
         public LineChart lineChart { get; set; }
         public BarChart barChart { get; set; }
 
@@ -85,8 +88,14 @@ namespace MiniProjekat
                         barChart.fillDates(queryResult.data);
                         lineChart.drawLine(values);
                         barChart.drawBars(values);
-
+                        dataPoints = queryResult.data;
                         showTable.Visibility = Visibility.Visible;
+
+                        if(tableWindow != null)
+                        {
+                            tableWindow.setDataPoints(dataPoints);
+                        }
+
                         return;
                     }
                 }
@@ -216,5 +225,21 @@ namespace MiniProjekat
             getData();
         }
 
+        private void showTable_Click(object sender, RoutedEventArgs e)
+        {
+            if (tableWindow != null)
+            {
+                tableWindow.Close();
+            }
+            tableWindow = new TableWindow();
+            tableWindow.setDataPoints(dataPoints);
+            tableWindow.Visibility = Visibility.Visible;
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            tableWindow.Close();
+        }
     }
 }

@@ -11,7 +11,8 @@
         Height="650"
         Width="1250"
         FontSize="15"
-        FontFamily="Roboto Mono">
+        FontFamily="Roboto Mono"
+        Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/> <!-- Data button row -->
@@ -67,7 +68,7 @@
             <ToggleButton x:Name="intervalTgl2" Content="Semi-annual" Width="110px" Margin="0 15px 15px 10px"/>
         </StackPanel>
 
-        <Button x:Name="showTable" Grid.Column="1" Grid.Row="3" Content="Show Table" MinWidth="250px" HorizontalAlignment="Right" Margin="0 10 15 15"/>
+        <Button x:Name="showTable" Grid.Column="1" Grid.Row="3" Content="Show Table" MinWidth="250px" HorizontalAlignment="Right" Margin="0 10 15 15" Click="showTable_Click"/>
 
     </Grid>
 </Window>
