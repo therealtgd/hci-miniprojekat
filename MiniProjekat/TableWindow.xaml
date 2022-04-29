@@ -20,18 +20,29 @@
 
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="TableXAML" HorizontalAlignment="Left" Margin="20,20,20,20" Width="auto" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" IsReadOnly="True">
+        <DataGrid x:Name="TableXAML" HorizontalAlignment="Left" Margin="20,20,20,20" Width="auto" Grid.ColumnSpan="1" Grid.Column="0" Grid.Row="0" 
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeRows="False"
+                  AlternatingRowBackground="#E1D5DF"
+                  FontFamily="Roboto Mono">
 
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="Teal"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
                 </Style>
             </DataGrid.Resources>
 
 
             <!-- Column Header & Text bindings-->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Date" Binding="{Binding date}" Width="*"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding value}" Width="*"/>
+                <DataGridTextColumn  Header="Date"  Binding="{Binding date}" Width="*"/>
+                <DataGridTextColumn  Header="Value" Binding="{Binding value}" Width="*"/>
             </DataGrid.Columns>
 
         </DataGrid>
