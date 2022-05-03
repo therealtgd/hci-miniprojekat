@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:local="clr-namespace:MiniProjekat"
         mc:Ignorable="d"
         Title="US Economic Indicators"
@@ -15,25 +16,32 @@
         Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/> <!-- Data button row -->
-            <RowDefinition Height="2.5*"/> <!-- Toggle button row -->
-            <RowDefinition Height="6.5*"/> <!-- Graph row -->
-            <RowDefinition Height="*"/> <!-- Show Table button row -->
+            <RowDefinition Height="*"/>
+            <!-- Data button row -->
+            <RowDefinition Height="2.5*"/>
+            <!-- Toggle button row -->
+            <RowDefinition Height="6.5*"/>
+            <!-- Graph row -->
+            <RowDefinition Height="*"/>
+            <!-- Show Table button row -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/> <!-- Toggle button col -->
-            <ColumnDefinition Width="10*"/> <!-- Graph col -->
+            <ColumnDefinition Width="0.5*"/>
+            <!-- Toggle button col -->
+            <ColumnDefinition Width="10*"/>
+            <!-- Graph col -->
             <!-- Show Table button col -->
         </Grid.ColumnDefinitions>
 
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left">
+            <Label Content="Data type:" Grid.Column="1" Grid.Row="0" Margin="0 15px 0 15px"/>
+            <ComboBox x:Name="dataType" IsEditable="False" Width="250px" Margin="0 15px 0 15px">
+                <ComboBoxItem IsSelected="True">Consumer Price Index</ComboBoxItem>
+                <ComboBoxItem>Inflation</ComboBoxItem>
+                <ComboBoxItem>Consumer Sentiment</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
 
-        <Label Content="Data type:" Grid.Column="1" Grid.Row="0" Margin="0 15px 0 10px"/>
-        <ComboBox x:Name="dataType" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" IsEditable="False" Width="250px" Margin="100px 15 10 10">
-            <ComboBoxItem IsSelected="True">Consumer Price Index</ComboBoxItem>
-            <ComboBoxItem>Inflation</ComboBoxItem>
-            <ComboBoxItem>Consumer Sentiment</ComboBoxItem>
-        </ComboBox>
-            
         <StackPanel Margin="0" Orientation="Vertical" Grid.Column="0" Grid.Row="1">
             <ToggleButton x:Name="tgl1" MinHeight="50px" MinWidth="30px" Margin="15px 0 10px 0">
                 <Image Source="./icons/line_chart.png"/>
@@ -43,8 +51,11 @@
             </ToggleButton>
         </StackPanel>
 
-        <!--Button sam stavio cisto kao placeholder za graph-->
-        <lvc:CartesianChart x:Name="lineChartUI" Series="{Binding Path=lineChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+        <StackPanel x:Name="loading" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
+            <Image gif:ImageBehavior.AnimatedSource="./icons/loading.gif" Height="485" Width="485"/>
+        </StackPanel>
+
+        <lvc:CartesianChart x:Name="lineChartUI" Visibility="Collapsed" Series="{Binding Path=lineChart.seriesCollection}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="0 0 15px 0">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Value"></lvc:Axis>
             </lvc:CartesianChart.AxisY>

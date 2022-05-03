@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,9 +25,10 @@ namespace MiniProjekat
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {   
+    {
         private const string API_KEY = "LJUP3P0MBG9X3SBZ";
-        
+
+        private bool firstRun = true;
         private const string CPI = "Consumer Price Index";
         private const string INF = "Inflation";
         private const string CS = "Consumer Sentiment";
@@ -50,6 +53,12 @@ namespace MiniProjekat
 
         public async Task getData()
         {
+            disableButtons();
+            if (firstRun)
+            {
+                firstRun = false;
+                return;
+            }
             lineChart.clear();
             barChart.clear();
 
@@ -71,6 +80,12 @@ namespace MiniProjekat
             {
                 using (HttpResponseMessage response = await client.GetAsync(QUERY_URL))
                 {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        retries += 1;
+                        await Task.Delay(1000);
+                        continue;
+                    }
                     using (HttpContent content = response.Content)
                     {
                         string jsonResponse = await content.ReadAsStringAsync();
@@ -81,14 +96,12 @@ namespace MiniProjekat
                             await Task.Delay(1000);
                             continue;
                         }
-
                         ChartValues<double> values = queryResult.getValues();
                         lineChart.fillDates(queryResult.data);
                         barChart.fillDates(queryResult.data);
                         lineChart.drawLine(values);
                         barChart.drawBars(values);
                         dataPoints = queryResult.data;
-                        showTable.Visibility = Visibility.Visible;
 
                         if(tableWindow != null)
                         {
@@ -96,12 +109,20 @@ namespace MiniProjekat
                             tableWindow.updateTitle(getSelectedDataTypeString(), (selectedInterval == "semiannual" ? true : false));
                         }
 
+                        enableButtons();
                         return;
                     }
                 }
             }
             // Show user that connection could not be established
-            showTable.Visibility = Visibility.Hidden;
+            enableButtons();
+            MessageBox.Show(
+                "Unable to fetch data from Alphavantage. " +
+                "Check your connection and try again.",
+                "Connection Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+                );
             /*ErrorWindow errorWindow = new ErrorWindow("Error: API not available.");
             errorWindow.ShowDialog();*/
         }
@@ -237,6 +258,31 @@ namespace MiniProjekat
             
         }
 
+        private void enableButtons()
+        {
+            dataType.IsEnabled = true;
+            intervalTgl1.IsEnabled = true;
+            intervalTgl2.IsEnabled = true;
+            tgl1.IsEnabled = true;
+            tgl2.IsEnabled = true;
+            showTable.Visibility = Visibility.Visible;
+            loading.Visibility = Visibility.Collapsed;
+            switchView();
+        }
+
+        private void disableButtons()
+        {
+            dataType.IsEnabled = false;
+            intervalTgl1.IsEnabled = false;
+            intervalTgl2.IsEnabled = false;
+            tgl1.IsEnabled = false;
+            tgl2.IsEnabled = false;
+            showTable.Visibility = Visibility.Hidden;
+            loading.Visibility = Visibility.Visible;
+            barChartUI.Visibility = Visibility.Collapsed;
+            lineChartUI.Visibility = Visibility.Collapsed;
+        }
+
         private void showTable_Click(object sender, RoutedEventArgs e)
         {
             if (tableWindow != null)
@@ -252,7 +298,8 @@ namespace MiniProjekat
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            tableWindow.Close();
+            if (tableWindow != null)
+                tableWindow.Close();
         }
     }
 }

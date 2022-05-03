@@ -12,10 +12,12 @@
     <None Remove="icons\egg.jpg" />
     <None Remove="icons\line_chart.png" />
     <None Remove="icons\line_chart.svg" />
+    <None Remove="icons\loading.gif" />
     <None Remove="icons\logo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="icons\loading.gif" />
     <Resource Include="icons\logo.png" />
   </ItemGroup>
 
@@ -30,6 +32,7 @@
   <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
